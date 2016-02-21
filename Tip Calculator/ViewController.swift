@@ -10,16 +10,51 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    var holdBillAmount: Double = 0.0;
+    var holdTipAmount: Double = 0.0;
+    var holdNumberOfPeople: Double = 0.0;
+    var holdBillTotals: Double = 0.0;
+    
+    @IBOutlet weak var inputBill: UITextField!
+    @IBOutlet weak var inputTip: UITextField!
+    @IBOutlet weak var inputNumberOfPeople: UITextField!
+    
+    @IBOutlet weak var lblTipTotal: UILabel!
+    @IBOutlet weak var lblBillTotal: UILabel!
+    
+    @IBOutlet weak var btnCalulate: UIButton!
+    @IBOutlet weak var btnBack: UIButton!
+    
+    @IBAction func calculateTip(sender: AnyObject) {
+        lblTipTotal.hidden = false;
+        btnCalulate.hidden = true;
+        btnBack.hidden = false;
+        lblBillTotal.hidden = false;
+        inputBill.hidden = true;
+        inputTip.hidden = true;
+        inputNumberOfPeople.hidden = true;
+        holdBillAmount = Double(inputBill.text!)!;
+        holdTipAmount = Double(inputTip.text!)! / 100;
+        holdNumberOfPeople = Double(inputNumberOfPeople.text!)!;
+        holdBillTotals = holdBillAmount * holdTipAmount
+        if Double(inputNumberOfPeople.text!)! > 1{
+            lblBillTotal.text = "Total $\((holdBillTotals + holdBillAmount) / holdNumberOfPeople) per person"
+            lblTipTotal.text = "Tip $\(holdBillTotals / holdNumberOfPeople) per person"
+        }else{
+          lblBillTotal.text = "Total $\((holdBillTotals + holdBillAmount) / holdNumberOfPeople)"
+            lblTipTotal.text = "Tip $\(holdBillTotals / holdNumberOfPeople)"
+        }
+        
+    
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func Back(sender: AnyObject) {
+        btnCalulate.hidden = false
+        lblTipTotal.hidden = true;
+        lblBillTotal.hidden = true;
+        inputBill.hidden = false;
+        btnBack.hidden = true;
+        inputTip.hidden = false;
+        inputNumberOfPeople.hidden = false;
     }
-
-
 }
 
